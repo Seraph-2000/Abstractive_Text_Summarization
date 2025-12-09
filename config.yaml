@@ -1,0 +1,71 @@
+# ==========================================
+#   ABSTRACTIVE TEXT SUMMARIZATION CONFIG
+# ==========================================
+
+# --- PROJECT IDENTITY (W&B) ---
+project_name: "Abstractive Text Summarization"
+# Change this name for every new experiment!
+run_name: "t5-base-cnndaily-v1" 
+
+# ==========================================
+#   1. MODEL SELECTION (Uncomment ONE block)
+# ==========================================
+
+# --- OPTION A: T5-BASE ---
+model_type: "t5"
+model_name: "t5-base"
+output_dir: "models/t5_base_adapter"
+
+# --- OPTION B: T5-SMALL ---
+# model_type: "t5"
+# model_name: "t5-small"
+# output_dir: "models/t5_small_adapter"
+
+# --- OPTION C: BART-LARGE-CNN ---
+# model_type: "bart"
+# model_name: "facebook/bart-large-cnn"
+# output_dir: "models/bart_large_adapter"
+
+# --- OPTION D: BART-BASE ---
+# model_type: "bart"
+# model_name: "facebook/bart-base"
+# output_dir: "models/bart_base_adapter"
+
+
+# ==========================================
+#   2. DATASET SELECTION (Uncomment ONE block)
+# ==========================================
+
+# --- OPTION A: CNN / DAILYMAIL ---
+dataset_name: "cnn_dailymail"
+dataset_config: "3.0.0"
+text_column: "article"
+summary_column: "highlights"
+
+# --- OPTION B: XSUM ---
+# dataset_name: "xsum"
+# dataset_config: null  # XSum doesn't need a specific config version
+# text_column: "document"
+# summary_column: "summary"
+
+
+# ==========================================
+#   3. HYPERPARAMETERS
+# ==========================================
+
+# Training Setup
+train_samples: 10000      # Set to -1 to use the full dataset (WARNING: takes hours)
+eval_samples: 500
+batch_size: 8             # Decrease to 4 if you run out of GPU memory
+grad_accum_steps: 2       # Increases effective batch size (8 * 2 = 16)
+epochs: 3
+learning_rate: 2.0e-4     # T5 likes higher LRs (e.g. 1e-3 or 2e-4), BART likes lower (2e-5)
+
+# Text Processing
+max_input_length: 1024
+max_target_length: 128
+
+# LoRA (PEFT) Settings
+lora_r: 8
+lora_alpha: 32
+lora_dropout: 0.1
