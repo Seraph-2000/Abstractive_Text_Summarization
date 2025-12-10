@@ -1,6 +1,6 @@
-﻿__pycache__/
-.env
-.vscode/
-*.pyc
-.DS_Store
+﻿.env
+venv/
+models/
 wandb/
+__pycache__/
+*.ipynb_checkpoints
